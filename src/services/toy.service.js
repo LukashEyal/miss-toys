@@ -97,8 +97,9 @@ function _createToys() {
     if (!toys || !toys.length ){
 
         toys = [
-            { _id: 't101', name: 'Talking Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true}
-
+            { _id: 't101', name: 'Talking Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true},
+            { _id: 't102', name: 'Talking Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: false},
+            { _id: 't103', name: 'Talking Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true}   
         ]
 
         utilService.saveToStorage(TOY_KEY, toys)

@@ -1,6 +1,6 @@
 import { toyService } from '../services/toy.service.js'
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { loadToys } from '../store/actions/toy.actions.js'
 import { ToysList } from './ToyList.jsx'
 
@@ -11,7 +11,7 @@ export function ToyIndex() {
 
   useEffect(() => {
     loadToys()
-  })
+  }, [])
 
   if (!toys) return <div>loading</div>
 
