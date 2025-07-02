@@ -3,17 +3,18 @@ import { toyService  } from '../../services/toy.service.js'
 import { store } from '../store.js'
 
 
-export function loadToys(){
+import { SET_FILTER, SET_TOYS } from '../reducers/toy.reducer.js'
 
-    return toyService.query()
-        .then(toys => {
-            
-            store.dispatch({ type: 'SET_TOYS', toys })
-        })
-        .catch(err => {
-            console.error('Error loading todos:', err)
-        })
-
+export async function loadToys() {
+  try {
+    const filterBy = store.getState().toyModule.filterBy
+    const toys = await toyService.query(filterBy)
+    store.dispatch({ type: SET_TOYS, toys })
+  } catch (err) {
+    console.log('Having issues with loading toys:', err)
+    // showErrorMsg('Having issues with loading toys:')
+    throw err
+  }
 }
 
 
@@ -51,9 +52,9 @@ export function loadToys(){
 
 // // }
 
-// export function setFilter(filterBy) {
-//     store.dispatch({ type: 'SET_FILTER', filterBy })
-// }
+export function setFilter(filterBy) {
+    store.dispatch({ type: 'SET_FILTER', filterBy })
+}
 
 // export function setLoading(isLoading) {
 //   return store.dispatch({ type: 'SET_LOADING', isLoading })

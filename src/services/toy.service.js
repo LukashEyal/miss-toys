@@ -9,7 +9,9 @@ export  const toyService = {
         createToy,
         getById,
         remove,
-        save
+        save,
+        getFilterFromSearchParams,
+        getDefaultFilter
 
 }
 
@@ -20,32 +22,54 @@ const TOY_KEY = 'toysDB'
 _createToys()
 
 
+
+
 async function query(filterBy) {
     try {
         let toys = await storageService.query(TOY_KEY)
 
-        if (filterBy) {
-            let {
-                name = '',
-                price = 0,
-                inStock,
-                label = ''
-            } = filterBy
-
+        if (filterBy && filterBy.name) {
+            const name = filterBy.name.toLowerCase()
             toys = toys.filter(toy =>
-                toy.name.toLowerCase().includes(name.toLowerCase()) &&
-                toy.price >= price &&
-                (inStock === undefined || toy.inStock === inStock) &&
-                toy.label.toLowerCase().includes(label.toLowerCase())
+                toy.name.toLowerCase().includes(name)
             )
         }
 
         return toys
-    } catch (error) {
-        console.log('error:', error)
-        throw error
+    } catch (err) {
+        console.error('Error querying toys:', err)
+        throw err
     }
 }
+
+
+
+// async function query(filterBy) {
+//     try {
+//         let toys = await storageService.query(TOY_KEY)
+
+//         if (filterBy) {
+//             let {
+//                 name = '',
+//                 price = 0,
+//                 inStock,
+//                 label = ''
+//             } = filterBy
+
+//             toys = toys.filter(toy =>
+//                 toy.name.toLowerCase().includes(name.toLowerCase()) &&
+//                 toy.price >= price &&
+//                 (inStock === undefined || toy.inStock === inStock) &&
+//                 toy.label.toLowerCase().includes(label.toLowerCase())
+//             )
+//         }
+
+//         return toys
+//     } catch (error) {
+//         console.log('error:', error)
+//         throw error
+//     }
+// }
 
 function getDefaultFilter() {
     return {
@@ -54,6 +78,16 @@ function getDefaultFilter() {
         inStock: undefined,
         label: ''
     }
+}
+
+
+function getFilterFromSearchParams(searchParams) {
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+    for (const field in defaultFilter) {
+        filterBy[field] = searchParams.get(field) || ''
+    }
+    return filterBy
 }
 
 
@@ -97,9 +131,9 @@ function _createToys() {
     if (!toys || !toys.length ){
 
         toys = [
-            { _id: 't101', name: 'Talking Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true},
-            { _id: 't102', name: 'Talking Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: false},
-            { _id: 't103', name: 'Talking Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true}   
+            { _id: 't101', name: 'queen Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true},
+            { _id: 't102', name: 'king Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: false},
+            { _id: 't103', name: 'prince Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true}   
         ]
 
         utilService.saveToStorage(TOY_KEY, toys)

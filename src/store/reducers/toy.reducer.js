@@ -1,3 +1,4 @@
+import { toyService } from "../../services/toy.service"
 
 
 
@@ -13,7 +14,8 @@ export const SET_FILTER = 'SET_FILTER'
 
 
 const initialState = {
-toys: []
+toys: [],
+filterBy: {}
 
 
 }
@@ -36,12 +38,11 @@ export function toyReducr(state = initialState, cmd) {
     //         }
 
 
-
-    //   case SET_FILTER:
-    // return {
-    //     ...state,
-    //     currentFilterBy: cmd.filterBy
-    // }
+  case SET_FILTER:
+            return {
+                ...state,
+                filterBy: { ...state.filterBy, ...cmd.filterBy }
+            }
 
 
         default:
