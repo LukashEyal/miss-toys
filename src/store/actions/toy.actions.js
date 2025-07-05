@@ -5,6 +5,7 @@ import { store } from '../store.js'
 
 import { SET_FILTER, SET_TOYS } from '../reducers/toy.reducer.js'
 
+
 export async function loadToys() {
   try {
     const filterBy = store.getState().toyModule.filterBy
@@ -14,9 +15,7 @@ export async function loadToys() {
     console.log('Having issues with loading toys:', err)
     // showErrorMsg('Having issues with loading toys:')
     throw err
-  }
-}
-
+  }}
 
 
 // export function removeTodo(todoId) {

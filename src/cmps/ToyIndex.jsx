@@ -18,7 +18,6 @@ export function ToyIndex() {
 
   useEffect(() => {
     loadToys()
-    setSearchParams(filterBy)
   }, [filterBy])
 
   if (!toys) return <div>loading</div>
@@ -26,8 +25,6 @@ export function ToyIndex() {
   function onSetFilterBy(filterBy) {
     setFilter(filterBy)
   }
-
-  const { name } = filterBy
 
   return (
     <div>

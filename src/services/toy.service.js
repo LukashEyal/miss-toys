@@ -19,20 +19,64 @@ export  const toyService = {
 
 
 const TOY_KEY = 'toysDB'
+
+
+
+const labels = [
+  'On wheels',
+  'Box game',
+  'Art',
+  'Baby',
+  'Doll',
+  'Puzzle',
+  'Outdoor',
+  'Battery Powered',
+]
+
+
 _createToys()
 
 
 
 
-async function query(filterBy) {
+async function query(filterBy = {}) {
     try {
         let toys = await storageService.query(TOY_KEY)
 
-        if (filterBy && filterBy.name) {
-            const name = filterBy.name.toLowerCase()
+        // Destructure with default values
+        let {
+            name = '',
+            label = '',
+            inStock,
+            sortBy = ''
+        } = filterBy
+
+        // Apply filters
+        if (name) {
             toys = toys.filter(toy =>
-                toy.name.toLowerCase().includes(name)
+                toy.name.toLowerCase().includes(name.toLowerCase())
             )
+        }
+
+        if (label) {
+           toys = toys.filter(toy =>
+    toy.label === label
+)
+        }
+
+   if (typeof inStock === 'boolean') {
+    toys = toys.filter(toy => toy.inStock === inStock)
+}
+        // Optional sorting logic
+        if (sortBy === 'name') {
+            toys.sort((a, b) => a.name.localeCompare(b.name))
+
+   if (sortBy === 'createdAt') {
+    toys.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+}
+
+        } else if (sortBy === 'price') {
+            toys.sort((a, b) => a.price - b.price)
         }
 
         return toys
@@ -105,11 +149,13 @@ function createToy(name = '', price = 0, label = 'General', inStock = true) {
 
 
 
-function getById(id) {
-    return storageService.get(TOY_KEY, _id)
+function getById(_id) {
+    
+    return storageService.get(TOY_KEY, _id);
 }
 
-function remove(id) {
+
+function remove(_id) {
     return storageService.remove(TOY_KEY, _id)
 }
 
@@ -128,19 +174,25 @@ function save(toyToSave) {
 
 function _createToys() {
     let toys = utilService.loadFromStorage(TOY_KEY)
-    if (!toys || !toys.length ){
+    if (!toys || !toys.length) {
 
         toys = [
-            { _id: 't101', name: 'queen Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true},
-            { _id: 't102', name: 'king Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: false},
-            { _id: 't103', name: 'prince Doll', price: 123, label: 'Doll', createdAt: Date.now(), inStock: true}   
+            { _id: 't101', name: 'Super Racer', price: 199, label: 'On wheels', createdAt: Date.now(), inStock: true },
+            { _id: 't102', name: 'Mega Box Challenge', price: 89, label: 'Box game', createdAt: Date.now(), inStock: false },
+            { _id: 't103', name: 'Tiny Paint Set', price: 145, label: 'Art', createdAt: Date.now(), inStock: true },
+            { _id: 't104', name: 'Baby Blocks', price: 75, label: 'Baby', createdAt: Date.now(), inStock: true },
+            { _id: 't105', name: 'Doll House', price: 38, label: 'Doll', createdAt: Date.now(), inStock: false },
+            { _id: 't106', name: 'Puzzle Quest', price: 120, label: 'Puzzle', createdAt: Date.now(), inStock: true },
+            { _id: 't107', name: 'Outdoor Fun Kit', price: 64, label: 'Outdoor', createdAt: Date.now(), inStock: true },
+            { _id: 't108', name: 'Battery Robot', price: 220, label: 'Battery Powered', createdAt: Date.now(), inStock: false },
+            { _id: 't109', name: 'Artistic Clay Set', price: 109, label: 'Art', createdAt: Date.now(), inStock: true },
+            { _id: 't110', name: 'Wheels of Fury', price: 184, label: 'On wheels', createdAt: Date.now(), inStock: true }
         ]
 
         utilService.saveToStorage(TOY_KEY, toys)
-
     }
-
 }
+
 
 
 
