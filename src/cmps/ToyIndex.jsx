@@ -1,6 +1,6 @@
 import { toyService } from '../services/toy.service.js'
 import { useSearchParams } from 'react-router-dom'
-
+import { Outlet } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { loadToys, setFilter } from '../store/actions/toy.actions.js'
@@ -32,6 +32,7 @@ export function ToyIndex() {
 
       <h1>Toys list</h1>
       <ToysList toys={toys} />
+      <Outlet />
     </div>
   )
 }
