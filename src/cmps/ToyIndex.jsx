@@ -3,13 +3,13 @@ import { useSearchParams } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { loadToys, setFilter } from '../store/actions/toy.actions.js'
+import { loadToys, setFilter, removeToy } from '../store/actions/toy.actions.js'
 import { ToysList } from './ToyList.jsx'
 import { ToyFilter } from './ToyFilter.jsx'
 
 export function ToyIndex() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const defaultFilter = toyService.getFilterFromSearchParams(searchParams)
+
   const filterBy = useSelector((state) => state.toyModule.filterBy)
 
   const toys = useSelector((state) => state.toyModule.toys)
@@ -22,6 +22,14 @@ export function ToyIndex() {
 
   if (!toys) return <div>loading</div>
 
+  async function onRemoveToy(toyId) {
+    try {
+      await removeToy(toyId)
+    } catch (error) {
+      console.log('Error ->', error)
+    }
+  }
+
   function onSetFilterBy(filterBy) {
     setFilter(filterBy)
   }
@@ -31,7 +39,7 @@ export function ToyIndex() {
       <ToyFilter onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
 
       <h1>Toys list</h1>
-      <ToysList toys={toys} />
+      <ToysList toys={toys} onRemoveToy={onRemoveToy} />
       <Outlet />
     </div>
   )

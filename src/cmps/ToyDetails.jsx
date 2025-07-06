@@ -17,7 +17,8 @@ export function ToyDetails() {
   }
   if (!toy) return <div>Loading...</div>
 
-  const { name, price, labels, inStock } = toy
+  const { name, price, label, inStock } = toy
+
   return (
     <article>
       <h1>{name}</h1>
@@ -26,9 +27,23 @@ export function ToyDetails() {
         <p>
           <strong>Price:</strong> ${price}
         </p>
-        <div className="toy-labels"></div>
+        <div className="toy-labels">
+          {label
+            .split(',')
+            .map((lbl) => lbl.trim())
+            .map((lbl) => (
+              <Link
+                key={lbl}
+                className="toy-label"
+                to={`/toy?label=${encodeURIComponent(lbl)}`}
+              >
+                {lbl}
+              </Link>
+            ))}
+        </div>
         <p>
-          <strong>Status:</strong> {inStock ? 'In Stock' : 'Out of Stock'}
+          <strong>Status:</strong>{' '}
+          {inStock ? '✔️ - In Stock' : '❌ - Out of Stock'}
         </p>
       </div>
       <Link to="/toy">Back to List</Link>

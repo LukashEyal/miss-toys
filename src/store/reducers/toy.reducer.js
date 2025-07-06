@@ -31,11 +31,14 @@ export function toyReducr(state = initialState, cmd) {
                 toys: cmd.toys
             }
         
-    //     case REMOVE_TOY:
-    //         return {
-    //             ...state,
-    //             toys: state.todos.filter(todo => todo._id !== cmd.todoId)
-    //         }
+        case REMOVE_TOY:
+            return {
+                ...state,
+                toys: state.toys.filter(toy => toy._id !== cmd.toyId)
+            }
+
+
+
 
 
   case SET_FILTER:

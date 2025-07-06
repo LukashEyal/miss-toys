@@ -3,7 +3,7 @@ import { toyService  } from '../../services/toy.service.js'
 import { store } from '../store.js'
 
 
-import { SET_FILTER, SET_TOYS } from '../reducers/toy.reducer.js'
+import { SET_FILTER, SET_TOYS, REMOVE_TOY } from '../reducers/toy.reducer.js'
 
 
 export async function loadToys() {
@@ -16,6 +16,20 @@ export async function loadToys() {
     // showErrorMsg('Having issues with loading toys:')
     throw err
   }}
+
+
+
+
+export async function removeToy(toyId) {
+  try {
+    await toyService.remove(toyId)
+    store.dispatch({ type: REMOVE_TOY, toyId })
+  } catch (err) {
+    console.log('Having issues removing toy:', err)
+    throw err
+  }
+}
+
 
 
 // export function removeTodo(todoId) {
