@@ -15,7 +15,7 @@ export function ToysList({ toys = [], onRemoveToy }) {
           <li key={toy._id}>
             <ToyPreview toy={toy} />
             <button onClick={() => setEditToyId(toy._id)}>Edit</button>
-            <button onClick={() => onRemoveToy(toy._id)}></button>
+            <button onClick={() => onRemoveToy(toy._id)}>Remove</button>
           </li>
         ))}
       </ul>

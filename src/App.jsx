@@ -1,4 +1,4 @@
-import './index.css'
+import './styles/main.scss'
 import { About } from './pages/About'
 import { Home } from './pages/Home'
 import { AppHeader } from './cmps/AppHeader'
