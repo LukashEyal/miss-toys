@@ -10,7 +10,7 @@ import { ToyEditModal } from './cmps/ToyEditModal'
 function App() {
   return (
     <BrowserRouter>
-      <section className="app main-layout">
+      <section className="main-layout">
         <AppHeader />
         <Routes>
           <Route path="/" element={<Home />} />

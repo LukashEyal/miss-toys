@@ -38,7 +38,6 @@ export function ToyIndex() {
     <div>
       <ToyFilter onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
 
-      <h1>Toys list</h1>
       <ToysList toys={toys} onRemoveToy={onRemoveToy} />
       <Outlet />
     </div>

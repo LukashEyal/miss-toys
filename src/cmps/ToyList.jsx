@@ -8,11 +8,11 @@ export function ToysList({ toys = [], onRemoveToy }) {
   const [editToyId, setEditToyId] = useState(null)
 
   return (
-    <div>
+    <div className="=toy-list-conatiner">
       <h1>Toy List</h1>
-      <ul>
+      <ul className="toy-grid">
         {toys.map((toy) => (
-          <li key={toy._id}>
+          <li key={toy._id} className="toy-card">
             <ToyPreview toy={toy} />
             <button onClick={() => setEditToyId(toy._id)}>Edit</button>
             <button onClick={() => onRemoveToy(toy._id)}>Remove</button>

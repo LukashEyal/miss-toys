@@ -3,15 +3,22 @@ import { NavLink } from 'react-router-dom'
 
 export function AppHeader() {
   return (
-    <header>
-      <section className="app-header-container">
+    <section className="app-header-container">
+      <div className="header">
         <h1>Miss Toys</h1>
-        <nav className="app-header-nav">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/toy">Our Toys!</NavLink>
-        </nav>
-      </section>
-    </header>
+      </div>
+
+      <nav className="app-header-nav">
+        <NavLink to="/">
+          <h3>Home</h3>
+        </NavLink>
+        <NavLink to="/toy">
+          <h3>Our Toys!</h3>
+        </NavLink>
+        <NavLink to="/about">
+          <h3>About</h3>
+        </NavLink>
+      </nav>
+    </section>
   )
 }
